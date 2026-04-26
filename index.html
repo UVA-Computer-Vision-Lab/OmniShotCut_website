@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniShotCut: Holistic Relational Shot Boundary Detection</title>
+
+  <!-- Bulma CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;700&family=Noto+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ HERO ═══════════════════════════════════════ -->
+<section class="hero is-white">
+  <div class="hero-body" style="padding: 4rem 1.5rem 2rem;">
+    <div class="container is-max-desktop has-text-centered">
+
+      <h1 class="title is-2 publication-title" style="margin-bottom:1.5rem; color:#1a1a2e;">
+        OmniShotCut: Holistic Relational Shot Boundary<br>Detection with Shot-Query Transformer
+      </h1>
+
+      <!-- Authors -->
+      <div class="is-size-5 publication-authors" style="margin-bottom:0.4rem;">
+        <span class="author-block"><a href="#">Boyang Wang</a><sup>1</sup></span>
+        <span class="author-block"><a href="#">Guangyi Xu</a><sup>1</sup></span>
+        <span class="author-block"><a href="#">Zhipeng Tang</a><sup>2</sup></span>
+        <span class="author-block"><a href="#">Jiahui Zhang</a><sup>1</sup></span>
+        <span class="author-block"><a href="#">Zezhou Cheng</a><sup>1</sup></span>
+      </div>
+
+      <!-- Affiliations -->
+      <div class="is-size-5" style="margin-bottom:1.8rem; color:#555;">
+        <span style="margin-right:1.5rem;"><sup>1</sup> University of Virginia</span>
+        <span><sup>2</sup> University of Massachusetts Amherst</span>
+      </div>
+
+      <!-- Link buttons -->
+      <div class="publication-links">
+        <span class="link-block" style="margin:4px;">
+          <a href="2073_OmniShotCut_Holistic_Rela.pdf" target="_blank"
+             class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span>
+            <span>Paper</span>
+          </a>
+        </span>
+        <span class="link-block" style="margin:4px;">
+          <a href="https://github.com/UVA-Computer-Vision-Lab/OmniShotCut" target="_blank" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+        </span>
+        <span class="link-block" style="margin:4px;">
+          <a href="https://huggingface.co/spaces/uva-cv-lab/OmniShotCut" target="_blank" class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fas fa-laptop"></i></span>
+            <span>Online Demo</span>
+          </a>
+        </span>
+        <span class="link-block" style="margin:4px;">
+          <a href="#benchmark" class="button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fas fa-database"></i></span>
+            <span>Benchmark</span>
+          </a>
+        </span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ TEASER / MOTIVATION ════════════════════════════════ -->
+<section class="section" style="padding-bottom:2rem;">
+  <div class="container is-max-desktop">
+    <div class="figure-box">
+      <!-- TODO: Replace with final teaser GIF once available -->
+      <img src="static/images/teaser.png" alt="Teaser GIF placeholder">
+      <p class="figure-caption" style="color:#aaa; font-style:italic; text-align:center;">
+        <!-- TODO: Replace with final teaser GIF and caption -->
+        🚧 Teaser figure under construction
+      </p>
+    </div>
+
+    <!-- TL;DR + Key Contributions -->
+    <div class="tldr-block">
+      <p class="tldr-line">
+        <span class="tldr-badge">TL;DR</span>
+        We propose OmniShotCut, a shot query-based Transformer that detects shot boundaries
+        while jointly predicting transition types and shot continuity relations,
+        trained entirely on synthetic data.
+      </p>
+
+      <p style="font-weight:700; font-size:0.85rem; letter-spacing:1.2px; text-transform:uppercase; color:#0f3460; margin-bottom:0.8rem; text-align:center;">Key Contributions</p>
+
+      <div class="columns is-multiline" style="margin-top:0.2rem;">
+
+        <div class="column is-half">
+          <div class="contribution-card">
+            <div class="contribution-number">01</div>
+            <h3>Relational SBD Formulation</h3>
+            <p style="font-size:0.95rem; color:#555; line-height:1.6;">
+              Reformulate SBD by enriching each shot with both <strong>intra-shot</strong> and
+              <strong>inter-shot</strong> relational information, moving beyond simple temporal range prediction.
+            </p>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="contribution-card">
+            <div class="contribution-number">02</div>
+            <h3>Shot Query-based Transformer</h3>
+            <p style="font-size:0.95rem; color:#555; line-height:1.6;">
+              A shot query-based Transformer that jointly optimizes range prediction and relational
+              classification within a unified hidden state.
+            </p>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="contribution-card">
+            <div class="contribution-number">03</div>
+            <h3>Fully Synthetic Training Pipeline</h3>
+            <p style="font-size:0.95rem; color:#555; line-height:1.6;">
+              A fully synthetic transition synthesis pipeline covering 9 types and 30 subtypes,
+              scaling to <strong>11.9M transitions</strong> without manual annotation.
+            </p>
+          </div>
+        </div>
+
+        <div class="column is-half">
+          <div class="contribution-card">
+            <div class="contribution-number">04</div>
+            <h3>OmniShotCutBench</h3>
+            <p style="font-size:0.95rem; color:#555; line-height:1.6;">
+              A modern wide-domain benchmark sourced from YouTube, TikTok, and Bilibili for
+              holistic and diagnostic SBD evaluation.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════ ABSTRACT ════════════════════════════════════ -->
+<section class="section" style="padding-top:1rem; padding-bottom:2rem;">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Abstract</h2>
+    <div class="abstract-box">
+      <p>
+        Shot Boundary Detection (SBD) automatically finds shot-change points to segment a video into coherent shots.
+        While SBD was widely studied in the literature, existing state-of-the-art methods often produce non-interpretable boundaries on transitions, miss subtle yet harmful discontinuities, and rely on noisy, low-diversity annotations and outdated benchmarks.
+        We propose <strong>OmniShotCut</strong> to formulate SBD as structured relational prediction, jointly estimating shot ranges with <em>intra</em>-shot relations and <em>inter</em>-shot relations, by a shot query-based dense video Transformer.
+        To avoid imprecise manual labeling, we adopt a fully synthetic transition synthesis pipeline that automatically reproduces major transition families with precise boundaries and parameterized variants.
+        We also introduce <strong>OmniShotCutBench</strong>, a modern wide-domain benchmark enabling holistic and diagnostic evaluation.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ════════════════════════════ PROBLEM FORMULATION ════════════════════════════ -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Problem Formulation</h2>
+
+    <div class="abstract-box" style="margin-bottom:1.5rem;">
+      <p>
+        We define the problem as empowering traditional Shot Boundary Detection within an end-to-end
+        model such that it not only predicts the temporal ranges of each shot, but also outputs the
+        <strong>intra-relation</strong> classification of the shot itself and the
+        <strong>inter-relation</strong> classification with respect to the previous shot.
+      </p>
+    </div>
+
+    <!-- Category grid -->
+    <div class="pf-cats">
+      <div class="pf-cat-col">
+        <div class="pf-cat-header" style="border-color:#0f7c5a; color:#0f7c5a;">
+          <i class="fas fa-film" style="margin-right:6px;"></i>Intra-shot Relations
+          <span class="pf-cat-count">8 categories</span>
+        </div>
+        <div class="pf-cat-pills">
+          <span class="pf-pill pf-pill-teal">General</span>
+          <span class="pf-pill pf-pill-teal">Dissolve</span>
+          <span class="pf-pill pf-pill-teal">Wipe</span>
+          <span class="pf-pill pf-pill-teal">Push</span>
+          <span class="pf-pill pf-pill-teal">Slide</span>
+          <span class="pf-pill pf-pill-teal">Zoom</span>
+          <span class="pf-pill pf-pill-teal">Fade</span>
+          <span class="pf-pill pf-pill-teal">Doorway</span>
+        </div>
+      </div>
+      <div class="pf-cat-col">
+        <div class="pf-cat-header" style="border-color:#5b35a0; color:#5b35a0;">
+          <i class="fas fa-cut" style="margin-right:6px;"></i>Inter-shot Relations
+          <span class="pf-cat-count">4 categories</span>
+        </div>
+        <div class="pf-cat-pills">
+          <span class="pf-pill pf-pill-purple">Transition</span>
+          <span class="pf-pill pf-pill-purple">Hard Cut</span>
+          <span class="pf-pill pf-pill-purple">Sudden Jump</span>
+          <span class="pf-pill pf-pill-purple">New-Start</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════ LARGE-SCALE VIDEO CURATION ═══════════════════════ -->
+<section class="section" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Video Curation and Transition Synthesis</h2>
+    <div class="abstract-box">
+      <p>
+        <strong>Video Curation.</strong>&nbsp;
+        We collect ~2.5M raw internet videos and filter them by resolution, frame rate, and duration.
+        Temporal continuity is verified via frame-level DINOv3 cosine similarity, and motion strength
+        is estimated with dense tracking to select medium-motion clips suitable for sudden jump synthesis.
+        The remaining clips are clustered into 27K semantic groups using SSL-based hierarchical K-means,
+        yielding ~1.5M curated sources.
+      </p>
+      <br>
+      <p>
+        <strong>Transition Synthesis.</strong>&nbsp;
+        Clip pairs are stitched with parameterized synthetic transitions spanning all 9 types and 30 subtypes.
+        75% of pairs are drawn from the same semantic cluster to simulate realistic content continuity;
+        25% are cross-cluster to reflect unpredictable real-world cuts.
+        An additional 25% of the synthesis budget is allocated to short dense hard-cuts (&lt;1 s)
+        to match real-world editing distributions.
+        The pipeline produces <strong>300K training videos</strong> containing
+        <strong>11.9M labeled transitions</strong> in total.
+      </p>
+    </div>
+    <div class="figure-box" style="margin-top:1.5rem;">
+      <img src="static/images/data_curation.png" alt="Large-scale transition source video curation">
+      <p class="figure-caption">
+        <strong>Large-scale transition source video curation.</strong>
+        (1) We collect ~2.5M raw videos from diverse Internet sources.
+        (2) Videos are filtered based on resolution, frame rate, and duration constraints.
+        (3) Temporal continuity and motion strength are verified using frame-level semantic similarity and dense motion tracking.
+        (4) Remaining videos are automatically clustered using the SSL data curation method to group semantically similar videos.
+        (5) Finally, video clips in the same and different clusters are fused to synthesize large-scale shot boundary detection training datasets.
+      </p>
+    </div>
+    <div class="figure-box">
+      <img src="static/images/training_dataset_stats.png" alt="Genre distribution and transition type distribution">
+      <p class="figure-caption">
+        <strong>Left:</strong> Our curation pipeline scales to internet-scale, wide-domain video collection and yields ~1.5M curated clip source for transition synthesis; genres are annotated by Qwen3.
+        <strong>Right:</strong> Transition statistics of the synthetic corpus. The inner ring shows the inter-shot relation distribution, and the outer ring breaks down all of the main and sub-transition types that our pipeline can synthesize. In total, we synthesize 11.9M transitions for training.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ SHOT QUERY-BASED TRANSFORMER ════════════════════ -->
+<section class="section" style="padding-top:0;">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">Shot Query-based Dense Video Transformer</h2>
+    <div class="abstract-box">
+      <p>
+        Our architecture is a Shot Query-based end-to-end video Transformer composed of an image encoder,
+        a spatiotemporal Transformer encoder with 3D positional embedding, and a Transformer decoder.
+        Each learnable <em>shot query</em> serves as a shot prediction slot, aggregating shot-specific
+        evidence from video tokens through cross-attention. Three prediction heads — a range head,
+        an intra-relation head, and an inter-relation head — produce all outputs jointly.
+        Range prediction is formulated as discrete classification over frame indices,
+        providing improved localization precision over regression-based approaches.
+      </p>
+    </div>
+    <div class="figure-box" style="margin-top:1.5rem;">
+      <img src="static/images/model_architecture.png" alt="Shot Query-based Dense Video Transformer">
+      <p class="figure-caption">
+        <strong>Shot Query-based Dense Video Transformer.</strong>
+        Frame tokens from input videos are encoded using a spatiotemporal Transformer encoder with 3D positional embedding.
+        Learnable shot queries in the decoder interact with frame features through cross-attention to predict shot range, intra-shot relation, and inter-shot relation.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════ OMNISHOTCUTBENCH ════════════════════════════ -->
+<section class="section" style="padding-top:0;" id="benchmark">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">OmniShotCutBench</h2>
+    <div class="abstract-box">
+      <p>
+        We introduce <strong>OmniShotCutBench</strong>, a modern shot boundary detection benchmark
+        designed to comprehensively evaluate models' performance on versatile transitions from
+        modern internet video sources. Videos are collected primarily from YouTube, TikTok, and
+        Bilibili, covering 8 intra-shot relation categories and 4 inter-shot relation categories.
+        In total, we curate 103 videos (~100 minutes) standardized to 480p at 30 FPS,
+        providing holistic and diagnostic evaluation for contemporary editing styles.
+        We will open-source this benchmark for future research.
+      </p>
+    </div>
+    <div class="figure-box" style="margin-top:1.5rem;">
+      <img src="static/images/benchmark.png" alt="OmniShotCutBench Construction Pipeline">
+      <p class="figure-caption">
+        <strong style="display:block; text-align:center;">An Overview of OmniShotCutBench Construction Pipeline.</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════ BIBTEX ════════════════════════════════ -->
+<section class="section" style="background:#f7f9fc;">
+  <div class="container is-max-desktop">
+    <h2 class="section-title">BibTeX</h2>
+    <div class="citation-box" id="bibtex">
+      <button class="copy-btn" onclick="copyBibtex()" id="copybtn">
+        <i class="fas fa-copy"></i> Copy
+      </button>
+      <pre style="margin:0; color:inherit; background:transparent; font-size:0.9rem; white-space:pre-wrap;">@inproceedings{omnishotcut2026,
+  title     = {OmniShotCut: Holistic Relational Shot Boundary Detection
+               with Shot-Query Transformer},
+  author    = {Anonymous},
+  booktitle = {European Conference on Computer Vision (ECCV)},
+  year      = {2026},
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════ FOOTER ════════════════════════════════ -->
+<footer class="footer">
+  <div class="content has-text-centered" style="font-size:0.88rem; color:#888;">
+    <p>
+      The design of this website is inspired by the
+      <a href="https://github.com/nerfies/nerfies.github.io" style="color:#4a90d9;">Nerfies</a>
+      project page.
+    </p>
+  </div>
+</footer>
+
+<script>
+function copyBibtex() {
+  const text = document.querySelector('#bibtex pre').innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copybtn');
+    btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+    setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>
