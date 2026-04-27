@@ -22,16 +22,20 @@
     <div class="container is-max-desktop has-text-centered">
 
       <h1 class="title is-2 publication-title" style="margin-bottom:1.5rem; color:#1a1a2e;">
-        OmniShotCut: Holistic Relational Shot Boundary<br>Detection with Shot-Query Transformer
+        <span style="color:#e63946; font-weight:800;">OmniShotCut</span>: Holistic Relational Shot Boundary<br>
+        Detection with Shot-Query Transformer
       </h1>
+      
 
       <!-- Authors -->
       <div class="is-size-5 publication-authors" style="margin-bottom:0.4rem;">
-        <span class="author-block"><a href="#">Boyang Wang</a><sup>1</sup></span>
+        <span class="author-block">
+          <a href="https://kiteretsu77.github.io/BoyangWang/">Boyang Wang</a><sup>1</sup>
+        </span>
         <span class="author-block"><a href="#">Guangyi Xu</a><sup>1</sup></span>
-        <span class="author-block"><a href="#">Zhipeng Tang</a><sup>2</sup></span>
+        <span class="author-block"><a href="https://people.umass.edu/zhipengtang/">Zhipeng Tang</a><sup>2</sup></span>
         <span class="author-block"><a href="#">Jiahui Zhang</a><sup>1</sup></span>
-        <span class="author-block"><a href="#">Zezhou Cheng</a><sup>1</sup></span>
+        <span class="author-block"><a href="https://sites.google.com/site/zezhoucheng/">Zezhou Cheng</a><sup>1</sup></span>
       </div>
 
       <!-- Affiliations -->
@@ -64,7 +68,7 @@
         <span class="link-block" style="margin:4px;">
           <a href="#benchmark" class="button is-normal is-rounded is-dark">
             <span class="icon"><i class="fas fa-database"></i></span>
-            <span>Benchmark</span>
+            <span>Benchmark (TODO)</span>
           </a>
         </span>
       </div>
@@ -79,9 +83,12 @@
     <div class="figure-box">
       <!-- TODO: Replace with final teaser GIF once available -->
       <img src="static/images/teaser.png" alt="Teaser GIF placeholder">
-      <p class="figure-caption" style="color:#aaa; font-style:italic; text-align:center;">
-        <!-- TODO: Replace with final teaser GIF and caption -->
-        🚧 Teaser figure under construction
+      <p class="figure-caption" style="color:#adb; font-style:italic; text-align:center;">
+        Limitations of traditional Shot Boundary Detection models.  <br>
+        (a) Detected Shots are hard to interpret: predicted boundaries lack explicit transition semantics; <br>
+        (b) Sudden Jump is under-modeled and often missed; <br>
+        (c) Human annotations are unreliable for gradual transition with subtle start/end frames; <br>
+        (d) Existing benchmarks are outdated and have a narrow domain, failing to reflect modern internet editing diversity. 
       </p>
     </div>
 
